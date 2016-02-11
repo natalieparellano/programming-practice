@@ -1,6 +1,7 @@
 # find Big O
 
 require 'pry'
+include Math
 
 arr = [1,2,3,4]
 
@@ -94,4 +95,52 @@ end
 
 reverse( arr )
 # O(N)
+
+def is_prime( num )
+  (2..sqrt( num )).each do |i|
+    if num % i == 0
+      puts "is not prime! (divisible by #{i})"
+      puts ""
+      return false
+    end
+  end
+  puts "is prime!"
+  puts ""
+  return true 
+end
+
+is_prime( 107 )
+# O(sqrt(N))
+
+def factorial( num )
+  val = if num < 0
+    -1
+  elsif num == 0
+    1
+  else
+    num * factorial( num - 1 )
+  end
+  puts val
+  puts ""
+  return val 
+end
+
+factorial( 4 )
+# O(N)
+
+def permutation( str, prefix="" )
+  if str.length == 0
+    puts "prefix: #{prefix}"
+  else
+    (0..str.length-1).each do |i|
+      remove_char = str.slice( 0, i ) + str.slice( i+1, str.length-1 )
+      permutation( remove_char, prefix + str[i] )
+    end
+  end
+end
+
+puts ""
+
+permutation( "hello" )
+# O(N!)
 
