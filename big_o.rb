@@ -144,3 +144,121 @@ puts ""
 permutation( "hello" )
 # O(N!)
 
+def fib( n )
+  # puts "n = #{n}"
+  if n <= 0
+    # puts "the end!"
+    0
+  elsif n == 1
+    # puts "the end!"
+    1    
+  else
+    fib( n - 1 ) + fib( n - 2 )
+  end
+end
+
+puts ""
+
+answer = fib( 6 )
+puts "answer: #{answer}"
+puts ""
+# O(2**N)
+
+def all_fib( n )
+  (0..n).each do |i|
+    puts fib( i )
+  end
+end
+
+all_fib( 6 )
+puts ""
+# O(2**(N+1)) or just O(2**N)
+
+def better_fib( n, arr )
+  puts "n = #{n}; arr = #{arr}"
+  if n <= 0
+    puts "the end!"
+    0
+  elsif n == 1
+    puts "the end!"
+    1    
+  elsif arr[n] && arr[n] > 0
+    puts "found it! arr[#{n}] = #{arr[n]}"
+    arr[n]
+  else
+    arr[n] = better_fib( n-1, arr ) + better_fib( n-2, arr )
+    puts "computed a[#{n}] = #{arr[n]}"
+    arr[n]
+  end
+end
+
+answer = better_fib( 6, [] )
+puts "answer: #{answer}"
+puts ""
+# O(N)
+
+def powers_of_2( n )
+  if n < 1
+    0
+  elsif n == 1
+    puts 1
+    1
+  else
+    prev = powers_of_2( n/2 )
+    curr = prev * 2
+    puts curr
+    curr
+  end
+end
+
+powers_of_2( 256 )
+puts ""
+# O(log N)
+
+def sqrt_helper( n, min, max )
+  puts "min: #{min}; max: #{max}"
+  if max < min
+    -1
+  else
+    guess = ( min + max ) / 2
+    puts "guess: #{guess}"
+
+    if guess**2 == n
+      guess
+    elsif guess**2 < n # too low
+      sqrt_helper( n, guess+1, max )
+    else
+      sqrt_helper( n, min, guess-1 )
+    end
+
+  end
+end
+
+sqrt_helper( 100, 1, 100 )
+puts ""
+# O(log N)
+
+def append_to_new( arr, val )
+  bigger = []
+  (0..arr.length).each do |i|
+    bigger[i] = arr[i]
+  end
+  bigger[bigger.length-1] = val
+  puts "bigger: #{bigger.inspect}"
+  bigger
+end
+# O(N)
+
+def copy_array( arr )
+  copy = []
+  arr.each do |i|
+    copy = append_to_new( copy, i )
+  end
+  copy
+end
+
+append_to_new( [1,1,2,3,5], 8 )
+puts ""
+
+copy_array( [1,1,2,3,5,8] )
+puts ""
