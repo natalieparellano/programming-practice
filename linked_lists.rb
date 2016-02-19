@@ -23,6 +23,34 @@ class LinkedList
     return linked_list
   end
 
+  def self.sum_lists( list1, list2 )
+    sum        = list1.head.data + list2.head.data # head.data
+    res_start  = sum % 10 
+    carry_over = sum / 10
+
+    result = LinkedList.new_from_values( [res_start] )
+
+    pointer1 = list1.head.next_node
+    pointer2 = list2.head.next_node
+
+    while pointer1 || pointer2 || ( carry_over > 0 )
+      val1 = pointer1 ? pointer1.data : 0
+      val2 = pointer2 ? pointer2.data : 0 # typo
+
+      sum = val1 + val2 + carry_over
+
+      res_next   = sum % 10 
+      carry_over = sum / 10 
+
+      result.append_to_tail( Node.new( res_next ))
+
+      pointer1 = pointer1 ? pointer1.next_node : nil # check for nil on intermediate result 
+      pointer2 = pointer2 ? pointer2.next_node : nil
+    end
+
+    return result
+  end
+
   def initialize( head )
     @head = head
   end
@@ -155,3 +183,15 @@ puts ""
 linked_list = LinkedList.new_from_values( [3,5,8,5,10,2,1] )
 puts linked_list.partition( 5 ).print_values
 puts ""
+
+list1 = LinkedList.new_from_values( [7,1,6] )
+list2 = LinkedList.new_from_values( [5,9,2] )
+puts LinkedList.sum_lists( list1, list2 ).print_values
+
+list1 = LinkedList.new_from_values( [7,1,6,4] )
+list2 = LinkedList.new_from_values( [5,9,2] )
+puts LinkedList.sum_lists( list1, list2 ).print_values
+
+list1 = LinkedList.new_from_values( [9,7,8] )
+list2 = LinkedList.new_from_values( [6,8,5] )
+puts LinkedList.sum_lists( list1, list2 ).print_values
